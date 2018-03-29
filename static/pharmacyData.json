@@ -1,0 +1,398 @@
+{
+  "pharmacy0": {
+    "name":  "Cardiff Pharmacy",
+    "lat": 51.487956,
+    "long": -3.184734,
+    "openingTimes": [
+      {
+        "open": 8,
+        "close": 17
+      },
+      {
+        "open": 8,
+        "close": 17
+      },
+      {
+        "open": 8,
+        "close": 15
+      },
+      {
+        "open": 8,
+        "close": 17
+      },
+      {
+        "open": 8,
+        "close": 17
+      },
+      {
+        "open": 11,
+        "close": 15
+      },
+      {
+        "open": 0,
+        "close": 0
+      }
+    ],
+    "phoneNumber": "02920180775"
+  },
+  "pharmacy1": {
+    "name": "Newport Pharmacy",
+    "lat": 51.588956,
+    "long": -3.001336,
+    "openingTimes": [
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 13
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 16
+      },
+      {
+        "open": 11,
+        "close": 16
+      }
+    ],
+    "phoneNumber": "02920180321"
+  },
+  "pharmacy2": {
+    "name": "A & JM Sheppard",
+    "lat": 51.693466,
+    "long": -3.223981,
+    "openingTimes": [
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 13
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 16
+      },
+      {
+        "open": 11,
+        "close": 16
+      }
+    ],
+    "phoneNumber": "01443831073"
+  },
+  "pharmacy3": {
+    "name": "Bargoed Pharmacy",
+    "lat": 51.687315,
+    "long": -3.229804,
+    "openingTimes": [
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 13
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 16
+      },
+      {
+        "open": 11,
+        "close": 16
+      }
+    ],
+    "phoneNumber": "01443839983"
+  },
+  "pharmacy4": {
+    "name": "Lewis Chemist",
+    "lat": 51.687786,
+    "long": -3.229816,
+    "openingTimes": [
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 13
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 16
+      },
+      {
+        "open": 11,
+        "close": 16
+      }
+    ],
+    "phoneNumber": "01443831030"
+  },
+  "pharmacy5": {
+    "name": "Boots",
+    "lat": 51.477540,
+    "long": -3.179600,
+    "openingTimes": [
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 13
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 16
+      },
+      {
+        "open": 11,
+        "close": 16
+      }
+    ],
+    "phoneNumber": "02920232063"
+  },
+  "pharmacy6": {
+    "name": "Boots",
+    "lat": 51.457693,
+    "long": -3.186245,
+    "openingTimes": [
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 13
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 16
+      },
+      {
+        "open": 11,
+        "close": 16
+      }
+    ],
+    "phoneNumber": "02920229612"
+  },
+  "pharmacy7": {
+    "name": "Brockway Pharmacy",
+    "lat": 51.408092,
+    "long": -3.289745,
+    "openingTimes": [
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 13
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 16
+      },
+      {
+        "open": 11,
+        "close": 16
+      }
+    ],
+    "phoneNumber": "01446720588"
+  },
+  "pharmacy8": {
+    "name": "Kevin Thomas Chemist",
+    "lat": 51.632697,
+    "long": -3.938734,
+    "openingTimes": [
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 13
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 16
+      },
+      {
+        "open": 11,
+        "close": 16
+      }
+    ],
+    "phoneNumber": "01792206816"
+  },
+  "pharmacy9": {
+    "name": "Well Pharmacy",
+    "lat": 51.646185,
+    "long": -3.972284,
+    "openingTimes": [
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 13
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 16
+      },
+      {
+        "open": 11,
+        "close": 16
+      }
+    ],
+    "phoneNumber": "01792581902"
+  },
+  "pharmacy10": {
+    "name": "Ysgol Pharmacy",
+    "lat": 51.620954,
+    "long": -3.916387,
+    "openingTimes": [
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 13
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 17
+      },
+      {
+        "open": 9,
+        "close": 16
+      },
+      {
+        "open": 11,
+        "close": 16
+      }
+    ],
+    "phoneNumber": "01792655353"
+  }
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Pharmacy</title>
+    <script type="text/javascript" src="/static/js/submit.js"></script>
+</head>
+
+<body onload="loadOptions()">
+<a href="/">Home page</a>
+<br>
+<br>
+
+<h1>Enter new pharmacy details</h1>
+<form name="addPharmacy" onsubmit="return submitAddForm()">
+    <label for="name"><b>Pharmacy Name: </b></label>
+    <input type="text" placeholder="Enter pharmacy name" name="name" id="name" required>
+    <br>
+    <br>
+    <label for="lat"><b>Latitude: </b></label>
+    <input type="number" placeholder="Enter latitude" name="lat" id="lat" step="any" min="51.3" max="53.6" required>
+    <br>
+    <br>
+    <label for="long"><b>Longitude: </b></label>
+    <input type="number" placeholder="Enter longitude" name="long" id="long" step="any" min="-6" max="-1.5" required>
+    <br>
+    <br>
+    <label for="phoneNumber"><b>Phone Number: </b></label>
+    <input type="tel" placeholder="Enter phone number" name="phoneNumber" id="phoneNumber" required>
+    <br>
+    <h2>Opening times: </h2>
+    <label for="mondayOpen"><b>Monday opening times:</b></label>
+    <br>
+    <input type="number" placeholder="Monday opening time" name="mondayOpen" id="mondayOpen" min="0" max="24" required>
+    <br>
+    <input type="number" placeholder="Monday closing time" name="mondayClose" id="mondayClose" min="0" max="24"
+           required>
+    <br>
+    <br>
+    <label for="tuesdayOpen"><b>Tuesday opening times:</b></label>
+    <br>
+    <input type="number" placeholder="Tuesday opening time" name="tuesdayOpen" id="tuesdayOpen" min="0" max="24"
+           required>
+    <br>
+    <input type="number" placeholder="Tuesday closing time" name="tuesdayClose" id="tuesdayClose" min="0" max="24"
+           required>
+    <br>
+    <br>
+    <label for="wednesdayOpen"><b>Wednesday opening times:</b></label>
+    <br>
+    <input type="number" placeholder="Wednesday opening time" name="wednesdayOpen" id="wednesdayOpen" min="0" max="24"
+           required>
+    <br>
+    <input type="number" placeholder="Wednesday closing time" name="wednesdayClose" id="wednesdayClose" min="0" max="24"
+           required>
+    <br>
+    <br>
+    <label for="thursdayOpen"><b>Thursday opening times:</b></label>
+    <br>
+    <input type="number" placeholder="Thursday opening time" name="thursdayOpen" id="thursdayOpen" min="0" max="24"
+           required>
+    <br>
+    <input type="number" placeholder="Thursday closing time" name="thursdayClose" id="thursdayClose" min="0" max="24"
+           required>
+    <br>
+    <br>
+    <label for="fridayOpen"><b>Friday opening times:</b></label>
+    <br>
+    <input type="number" placeholder="Friday opening time" name="fridayOpen" id="fridayOpen" min="0" max="24" required>
+    <br>
+    <input type="number" placeholder="Friday closing time" name="fridayClose" id="fridayClose" min="0" max="24"
+           required>
+    <br>
+    <br>
+    <label for="saturdayOpen"><b>Saturday opening times:</b></label>
+    <br>
+    <input type="number" placeholder="Saturday opening time" name="saturdayOpen" id="saturdayOpen" min="0" max="24"
+           required>
+    <br>
+    <input type="number" placeholder="Saturday closing time" name="saturdayClose" id="saturdayClose" min="0" max="24"
+           required>
+    <br>
+    <br>
+    <label for="sundayOpen"><b>Sunday opening times:</b></label>
+    <br>
+    <input type="number" placeholder="Sunday opening time" name="sundayOpen" id="sundayOpen" min="0" max="24" required>
+    <br>
+    <input type="number" placeholder="Sunday closing time" name="sundayClose" id="sundayClose" min="0" max="24"
+           required>
+    <br>
+    <h2>Service Data</h2>
+    <div id="coreServiceList"></div>
+    <div id="newServiceSection1"></div
+    <br>
+    <label for="pincode"><b>Pincode:</b></label>
+    <br>
+    <input type="password" placeholder="Enter pincode" name="pincode" id="pincode" required>
+    <br>
+    <br>
+    <input type="button" value="Test" name="button1" onclick="test()">
+    <br>
+    <br>
+    <input type="submit" value="Add pharmacy" name="submit">
+</form>
+<span id="response"></span>
+
+</body>
+</html>

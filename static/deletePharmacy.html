@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Pharmacy</title>
+    <script type="text/javascript" src="/static/js/submit.js"></script>
+</head>
+
+<body onload="loadOptions()">
+<a href="/">Home page</a>
+<br>
+<br>
+
+<h1>Delete Pharmacy</h1>
+<form name="deletePharmacy" onsubmit="return submitDeleteForm()">
+    <label for="name"><b>Pharmacy Name: </b></label>
+    <input type="text" placeholder="Enter pharmacy name" name="name" id="name" required>
+    <br>
+    <br>
+    <label for="phoneNumber"><b>Phone Number: </b></label>
+    <input type="tel" placeholder="Enter phone number" name="phoneNumber" id="phoneNumber" required>
+    <br>
+    <br>
+    <label for="pincode"><b>Pincode:</b></label>
+    <br>
+    <input type="password" placeholder="Enter pincode" name="pincode" id="pincode" required>
+    <br>
+    <br>
+    <input type="submit" value="Add pharmacy" name="submit">
+</form>
+<span id="response"></span>
+
+</body>
+</html>
