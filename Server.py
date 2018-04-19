@@ -2,6 +2,7 @@ from flask import Flask, request
 import sqlite3 as sql
 import os
 import json
+
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 app = Flask(__name__)
 DATABASE = APP_ROOT + "/database.db"
@@ -66,19 +67,19 @@ def get_json():
         pharmacyObject['long'] = long
         pharmacyObject['phoneNumber'] = phoneNumber
         openingTimesObject = []
-        openingTimesData = openingTimes.split(':')
+        openingTimesData = openingTimes.split(',')
         for j in range(0, len(openingTimesData)):
-            open = int(openingTimesData[j].split(',')[0])
-            close = int(openingTimesData[j].split(',')[1])
+            open = openingTimesData[j].split(':')[0]
+            close = openingTimesData[j].split(':')[1]
             openingTimesObject.append({"open" : open, "close": close})
 
         pharmacyObject['openingTimes'] = openingTimesObject
 
         servicesObject = []
-        servicesData = services.split(':')
+        servicesData = services.split(',')
         for j in range(0, len(servicesData)):
-            service = servicesData[j].split(',')[0]
-            welshAvailablity = servicesData[j].split(',')[1]
+            service = servicesData[j].split(':')[0]
+            welshAvailablity = servicesData[j].split(':')[1]
             servicesObject.append({service: welshAvailablity})
 
         pharmacyObject['services'] = servicesObject
@@ -86,6 +87,7 @@ def get_json():
         data['pharmacy' + str(i)] = pharmacyObject
 
     json_data = json.dumps(data)
+
     return json_data
 
 
