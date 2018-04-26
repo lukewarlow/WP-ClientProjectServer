@@ -25,10 +25,11 @@ def add_pharmacy():
         long = request.form.get('long', default="Error")
         phoneNumber = request.form.get('phoneNumber', default="Error")
         openingTimes = request.form.get('openingTimes', default="Error")
+        welshAvailable = request.form.get('welshAvailable', default="Error")
         services = request.form.get('services', default="Error")
         pin = request.form.get('pincode', default="Error")
         if (pin == pincode):
-            msg = insert_into_database_table("INSERT INTO tblPharmacy ('name', 'lat', 'long', 'openingTimes', 'phoneNumber', 'services') VALUES (?,?,?,?,?,?)", (name, lat, long, openingTimes, phoneNumber, services))
+            msg = insert_into_database_table("INSERT INTO tblPharmacy ('name', 'lat', 'long', 'openingTimes', 'phoneNumber', 'welshAvailable', 'services') VALUES (?,?,?,?,?,?,?)", (name, lat, long, openingTimes, phoneNumber, welshAvailable, services))
         else:
             msg = "Invalid pin code"
         return msg
@@ -63,7 +64,8 @@ def findpharmacy():
         long = pharmacyData[3]
         openingTimes = pharmacyData[4]
         phoneNumber = pharmacyData[5]
-        services = pharmacyData[6]
+        welshAvailable = pharmacyData[6]
+        services = pharmacyData[7]
         pharmacyObject = {}
         pharmacyObject['name'] = name
         pharmacyObject['lat'] = lat
@@ -77,14 +79,8 @@ def findpharmacy():
             openingTimesObject.append({"open" : open, "close": close})
             pharmacyObject['openingTimes'] = openingTimesObject
 
-        servicesObject = []
-        servicesData = services.split(',')
-        for j in range(0, len(servicesData)):
-            service = servicesData[j].split(':')[0]
-            welshAvailablity = servicesData[j].split(':')[1]
-            servicesObject.append({service: welshAvailablity})
-
-        pharmacyObject['services'] = servicesObject
+        pharmacyObject['welshAvailable'] = welshAvailable
+        pharmacyObject['services'] = services
 
         data['pharmacy0'] = pharmacyObject
 
@@ -115,7 +111,8 @@ def get_json():
         long = pharmacyData[i][3]
         openingTimes = pharmacyData[i][4]
         phoneNumber = pharmacyData[i][5]
-        services = pharmacyData[i][6]
+        welshAvailable = pharmacyData[i][6]
+        services = pharmacyData[i][7]
 
         pharmacyObject = {}
         pharmacyObject['name'] = name
@@ -130,15 +127,8 @@ def get_json():
             openingTimesObject.append({"open" : open, "close": close})
 
         pharmacyObject['openingTimes'] = openingTimesObject
-
-        servicesObject = []
-        servicesData = services.split(',')
-        for j in range(0, len(servicesData)):
-            service = servicesData[j].split(':')[0]
-            welshAvailablity = servicesData[j].split(':')[1]
-            servicesObject.append({service: welshAvailablity})
-
-        pharmacyObject['services'] = servicesObject
+        pharmacyObject['welshAvailable'] = welshAvailable
+        pharmacyObject['services'] = services
 
         data['pharmacy' + str(i)] = pharmacyObject
 
