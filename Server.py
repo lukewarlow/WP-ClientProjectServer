@@ -49,6 +49,62 @@ def remove_pharmacy():
         return msg
 
 
+@app.route('/findpharmacy',methods=['POST'])
+def findpharmacy():
+    pharmPhone = request.form.get('phoneNumber')
+    print (pharmPhone)
+    try:
+        conn = sql.connect(DATABASE)
+        cur = conn.cursor()
+        pharmacyData = select_from_database_table("SELECT * FROM tblPharmacy WHERE phoneNumber=?", [pharmPhone])
+        data = {}
+        name = pharmacyData[1]
+        lat = pharmacyData[2]
+        long = pharmacyData[3]
+        openingTimes = pharmacyData[4]
+        phoneNumber = pharmacyData[5]
+        services = pharmacyData[6]
+        pharmacyObject = {}
+        pharmacyObject['name'] = name
+        pharmacyObject['lat'] = lat
+        pharmacyObject['long'] = long
+        pharmacyObject['phoneNumber'] = phoneNumber
+        openingTimesObject = []
+        openingTimesData = openingTimes.split(',')
+        for j in range(0, len(openingTimesData)):
+            open = openingTimesData[j].split(':')[0]
+            close = openingTimesData[j].split(':')[1]
+            openingTimesObject.append({"open" : open, "close": close})
+            pharmacyObject['openingTimes'] = openingTimesObject
+
+        servicesObject = []
+        servicesData = services.split(',')
+        for j in range(0, len(servicesData)):
+            service = servicesData[j].split(':')[0]
+            welshAvailablity = servicesData[j].split(':')[1]
+            servicesObject.append({service: welshAvailablity})
+
+        pharmacyObject['services'] = servicesObject
+
+        data['pharmacy0'] = pharmacyObject
+
+        json_data = json.dumps(data)
+        print(data)
+    except Exception as e:
+        print(e)
+        conn.close()
+    finally:
+        conn.close()
+        return json_data
+
+    # code goes here to find pharmacy#
+
+
+#@app.route('/updatepharmacy', methods=['GET'])
+#def updatePharm():
+    # code to update pharmacies#
+
+
 @app.route('/pharmacyjson', methods=['GET'])
 def get_json():
     pharmacyData = select_from_database_table("SELECT * FROM tblPharmacy", "", True)
