@@ -15,7 +15,7 @@ def index():
     return app.send_static_file("index.html")
 
 
-@app.route('/addpharmacy', methods=['POST', 'GET'])
+@app.route('/addpharmacy', methods=['GET', 'POST'])
 def add_pharmacy():
     if request.method == "GET":
         return app.send_static_file("addPharmacy.html")
@@ -35,7 +35,22 @@ def add_pharmacy():
         return msg
 
 
-@app.route('/deletepharmacy', methods=['POST', 'GET'])
+@app.route('/deletepharmacy', methods=['GET', 'DELETE'])
+def remove_pharmacy():
+    if request.method == "GET":
+        return app.send_static_file("deletePharmacy.html")
+    else:
+        name = request.form.get('name', default="Error")
+        phoneNumber = request.form.get('phoneNumber', default="Error")
+        pin = request.form.get('pincode', default="Error")
+        if (pin == pincode):
+            msg = delete_from_table("DELETE FROM tblPharmacy WHERE name=? AND phoneNumber=?", (name, phoneNumber))
+        else:
+            msg = "Invalid pin code"
+        return msg
+
+
+@app.route('/deletepharmacy', methods=['GET', 'DELETE'])
 def remove_pharmacy():
     if request.method == "GET":
         return app.send_static_file("deletePharmacy.html")
@@ -88,21 +103,22 @@ def findpharmacy():
         print(data)
     except Exception as e:
         print(e)
-        conn.close()
     finally:
         conn.close()
         return json_data
 
-    # code goes here to find pharmacy#
 
-
-#@app.route('/updatepharmacy', methods=['GET'])
-#def updatePharm():
-    # code to update pharmacies#
+@app.route('/updatepharmacy', methods=['GET','PUT'])
+def update_pharmacy():
+    if request.method == "GET":
+        return app.send_static_file("updatePharmacy.html")
+    else:
+        pass
+        #Code to update goes here
 
 
 @app.route('/pharmacyjson', methods=['GET'])
-def get_json():
+def get_pharmacies():
     pharmacyData = select_from_database_table("SELECT * FROM tblPharmacy", "", True)
     data = {}
     for i in range(0, len(pharmacyData)):
@@ -131,6 +147,104 @@ def get_json():
         pharmacyObject['services'] = services
 
         data['pharmacy' + str(i)] = pharmacyObject
+
+    json_data = json.dumps(data)
+
+    return json_data
+
+
+@app.route('/addservice', methods=['GET', 'POST'])
+def add_service():
+    if request.method == "GET":
+        return app.send_static_file("addService.html")
+    else:
+        name = request.form.get('name', default="Error")
+        welshName = request.form.get('welshName', default="Error")
+        description = request.form.get('description', default="Error")
+        welshDescription = request.form.get('welshDescription', default="Error")
+        pin = request.form.get('pincode', default="Error")
+        if (pin == pincode):
+            msg = insert_into_database_table("INSERT INTO tblService ('name', 'welshName', 'description', 'welshDescription') VALUES (?,?,?,?)", (name, welshName, description, welshDescription))
+        else:
+            msg = "Invalid pin code"
+        return msg
+
+
+# @app.route('/deleteservice', methods=['GET', 'DELETE'])
+# def delete_service():
+    # if request.method == "GET":
+    #     return app.send_static_file("deleteService.html")
+    # else:
+        # name = request.form.get('name', default="Error")
+        # welshName = request.form.get('welshName', default="Error")
+        # pin = request.form.get('pincode', default="Error")
+        # if (pin == pincode):
+        #     msg = insert_into_database_table("DELETE FROM tblService WHERE name=? AND welshName=?", (name, welshName))
+        # else:
+        #     msg = "Invalid pin code"
+        # return msg
+
+
+@app.route('/findservice', methods=['GET'])
+def find_service():
+    name = request.form.get('name')
+    try:
+        conn = sql.connect(DATABASE)
+        serviceData = select_from_database_table("SELECT * FROM tblService WHERE name=?", [name])
+        data = {}
+        name = serviceData[1]
+        welshName = serviceData[2]
+        description = serviceData[3]
+        welshDescription = serviceData[4]
+        serviceObject = {}
+        serviceObject['name'] = name
+        serviceObject['welshName'] = welshName
+        serviceObject['description'] = description
+        serviceObject['welshDescription'] = welshDescription
+        data['pharmacy0'] = serviceObject
+
+        json_data = json.dumps(data)
+    except Exception as e:
+        print(e)
+    finally:
+        conn.close()
+        return json_data
+
+
+@app.route('/updateservice', methods=['GET', 'PUT'])
+def update_service():
+    if request.method == "GET":
+        return app.send_static_file("updateService.html")
+    else:
+        name = request.form.get('name', default="Error")
+        welshName = request.form.get('welshName', default="Error")
+        description = request.form.get('description', default="Error")
+        welshDescription = request.form.get('welshDescription', default="Error")
+        pin = request.form.get('pincode', default="Error")
+        if (pin == pincode):
+            msg = update_table("UPDATE tblService SET description=?, welshDescription=? WHERE name=? AND welshName=?", [description, welshDescription, name, welshName])
+        else:
+            msg = "Invalid pin code"
+        return msg
+
+
+@app.route('/servicejson', methods=['GET'])
+def get_services():
+    serviceData = select_from_database_table("SELECT * FROM tblService", "", True)
+    data = {}
+    for i in range(0, len(serviceData)):
+        name = serviceData[i][1]
+        welshName = serviceData[i][2]
+        description = serviceData[i][3]
+        welshDescription = serviceData[i][4]
+
+        serviceObject = {}
+        serviceObject['name'] = name
+        serviceObject['welshName'] = welshName
+        serviceObject['description'] = description
+        serviceObject['welshDescription'] = welshDescription
+
+        data['service' + str(i)] = serviceObject
 
     json_data = json.dumps(data)
 
