@@ -117,7 +117,7 @@ def update_pharmacy():
         #Code to update goes here
 
 
-@app.route('/pharmacyjson', methods=['GET'])
+@app.route('/pharmacies', methods=['GET'])
 def get_pharmacies():
     pharmacyData = select_from_database_table("SELECT * FROM tblPharmacy", "", True)
     data = {}
@@ -228,7 +228,7 @@ def update_service():
         return msg
 
 
-@app.route('/servicejson', methods=['GET'])
+@app.route('/services', methods=['GET'])
 def get_services():
     serviceData = select_from_database_table("SELECT * FROM tblService", "", True)
     data = {}
