@@ -50,21 +50,6 @@ def remove_pharmacy():
         return msg
 
 
-@app.route('/deletepharmacy', methods=['GET', 'DELETE'])
-def remove_pharmacy():
-    if request.method == "GET":
-        return app.send_static_file("deletePharmacy.html")
-    else:
-        name = request.form.get('name', default="Error")
-        phoneNumber = request.form.get('phoneNumber', default="Error")
-        pin = request.form.get('pincode', default="Error")
-        if (pin == pincode):
-            msg = delete_from_table("DELETE FROM tblPharmacy WHERE name=? AND phoneNumber=?", (name, phoneNumber))
-        else:
-            msg = "Invalid pin code"
-        return msg
-
-
 @app.route('/findpharmacy',methods=['POST'])
 def findpharmacy():
     pharmPhone = request.form.get('phoneNumber')
@@ -108,13 +93,17 @@ def findpharmacy():
         return json_data
 
 
-@app.route('/updatepharmacy', methods=['GET','PUT'])
+@app.route('/updatepharmacy', methods=['GET','POST'])
 def update_pharmacy():
     if request.method == "GET":
         return app.send_static_file("updatePharmacy.html")
     else:
-        pass
-        #Code to update goes here
+        pharmPhone = request.form.get('phoneNumber')
+        updateWelsh = request.form.get('welshAvailable')
+        updateService = request.form.get('services')
+        print(pharmPhone)
+        print(updateWelsh)
+        return update_table("UPDATE tblPharmacy SET welshAvailable=? WHERE phoneNumber=?",[updateWelsh,pharmPhone])
 
 
 @app.route('/pharmacies', methods=['GET'])
