@@ -127,6 +127,90 @@ function submitDeleteForm()
     return false;
 }
 
+function submitAddServiceForm()
+{
+    var form = document.forms["addService"];
+    var name = form["name"].value;
+    var welshName = form["welshName"].value;
+    var description = form["description"].value;
+    var welshDescription = form["welshDescription"].value;
+
+    var pin = form["pincode"].value;
+    var params = 'name=' + htmlEntities(name) + '&welshName=' + htmlEntities(welshName) + '&description=' + htmlEntities(description) + '&welshDescription=' + htmlEntities(welshDescription) + '&pincode=' + pin;
+    var xhttp = new XMLHttpRequest();
+    var msg = "";
+    xhttp.open("post", "/addservice", true); // true is asynchronous
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.onreadystatechange = function ()
+    {
+        if (xhttp.readyState === 4)
+        {
+            if (xhttp.status === 200)
+            {
+                msg = xhttp.responseText;
+                if (msg === "Invalid pin code")
+                    document.getElementById("pincode").style.border = "3px solid red";
+                else
+                {
+                    form.reset();
+                    document.getElementById("pincode").style.border = "none";
+                }
+                document.getElementById("response").innerText = msg;
+            }
+            else
+            {
+                console.error(xhttp.statusText);
+                msg = "Error: other wierd response " + xhttp.status;
+            }
+            console.log(msg);
+        }
+    };
+    xhttp.send(params);
+
+    return false;
+}
+
+function submitDeleteServiceForm()
+{
+    var form = document.forms["addService"];
+    var name = form["name"].value;
+    var welshName = form["welshName"].value;
+
+    var pin = form["pincode"].value;
+    var params = 'name=' + htmlEntities(name) + '&welshName=' + htmlEntities(welshName) + '&pincode=' + pin;
+    var xhttp = new XMLHttpRequest();
+    var msg = "";
+    xhttp.open("delete", "/deleteservice", true); // true is asynchronous
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.onreadystatechange = function ()
+    {
+        if (xhttp.readyState === 4)
+        {
+            if (xhttp.status === 200)
+            {
+                msg = xhttp.responseText;
+                if (msg === "Invalid pin code")
+                    document.getElementById("pincode").style.border = "3px solid red";
+                else
+                {
+                    form.reset();
+                    document.getElementById("pincode").style.border = "none";
+                }
+                document.getElementById("response").innerText = msg;
+            }
+            else
+            {
+                console.error(xhttp.statusText);
+                msg = "Error: other wierd response " + xhttp.status;
+            }
+            console.log(msg);
+        }
+    };
+    xhttp.send(params);
+
+    return false;
+}
+
 function htmlEntities(str) {
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }

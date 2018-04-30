@@ -7,6 +7,34 @@
 
 <body>
 <a href="/">Home page</a>
-<h1>Page under construction</h1>
+<br>
+<br>
+
+<h1>Enter new service details</h1>
+<form name="addService" onsubmit="return submitAddServiceForm()">
+    <label for="name"><b>Service name: </b></label>
+    <input type="text" placeholder="Enter service name" name="name" id="name" required>
+    <br>
+    <br>
+    <label for="welshName"><b>Service name in Welsh: </b></label>
+    <input type="text" placeholder="Enter service name in welsh" name="welshName" id="welshName" required>
+    <br>
+    <br>
+    <label for="description"><b>Service description: </b></label>
+    <input type="text" placeholder="Enter service description" name="description" id="description" required>
+    <br>
+    <br>
+    <label for="welshDescription"><b>Service description in Welsh: </b></label>
+    <input type="text" placeholder="Enter service description in welsh" name="welshDescription" id="welshDescription" required>
+    <br>
+    <br>
+    <label for="pincode"><b>Pincode:</b></label>
+    <br>
+    <input type="password" placeholder="Enter pincode" name="pincode" id="pincode" required>
+    <br>
+    <br>
+    <input type="submit" value="Add service" name="submit">
+</form>
+<span id="response"></span>
 </body>
 </html>

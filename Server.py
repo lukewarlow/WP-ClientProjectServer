@@ -192,7 +192,7 @@ def delete_service():
         welshName = request.form.get('welshName', default="Error")
         pin = request.form.get('pincode', default="Error")
         if (pin == pincode):
-            msg = insert_into_database_table("DELETE FROM tblService WHERE name=? AND welshName=?", (name, welshName))
+            msg = delete_from_table("DELETE FROM tblService WHERE name=? AND welshName=?", (name, welshName))
         else:
             msg = "Invalid pin code"
         return msg
