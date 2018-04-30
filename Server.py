@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 import sqlite3 as sql
 import os
 import json
@@ -18,7 +18,8 @@ def index():
 @app.route('/addpharmacy', methods=['GET', 'POST'])
 def add_pharmacy():
     if request.method == "GET":
-        return app.send_static_file("addPharmacy.html")
+        services = get_enhanced_service_names()
+        return render_template("addPharmacy.html", services=services)
     else:
         name = request.form.get('name', default="Error")
         lat = request.form.get('lat', default="Error")
@@ -27,12 +28,34 @@ def add_pharmacy():
         openingTimes = request.form.get('openingTimes', default="Error")
         welshAvailable = request.form.get('welshAvailable', default="Error")
         services = request.form.get('services', default="Error")
+        core_services = get_core_service_names()
+        for i in range(0, 4):
+            services = services.insert(core_services[i] + ",")
         pin = request.form.get('pincode', default="Error")
         if (pin == pincode):
             msg = insert_into_database_table("INSERT INTO tblPharmacy ('name', 'lat', 'long', 'openingTimes', 'phoneNumber', 'welshAvailable', 'services') VALUES (?,?,?,?,?,?,?)", (name, lat, long, openingTimes, phoneNumber, welshAvailable, services))
         else:
             msg = "Invalid pin code"
         return msg
+
+def get_core_service_names():
+    serviceData = select_from_database_table("SELECT * FROM tblService", "", True)
+    services = []
+    for i in range(0, 4):
+        name = serviceData[i][1]
+        name = name.replace(" ", "_")
+        services.append(name.lower())
+    return services
+
+
+def get_enhanced_service_names():
+    serviceData = select_from_database_table("SELECT * FROM tblService", "", True)
+    services = []
+    for i in range(4, len(serviceData)):
+        name = serviceData[i][1]
+        name = name.replace(" ", "_")
+        services.append(name.lower())
+    return services
 
 
 @app.route('/deletepharmacy', methods=['GET', 'DELETE'])
@@ -93,17 +116,18 @@ def findpharmacy():
         return json_data
 
 
-@app.route('/updatepharmacy', methods=['GET','POST'])
+@app.route('/updatepharmacy', methods=['GET','PUT'])
 def update_pharmacy():
     if request.method == "GET":
         return app.send_static_file("updatePharmacy.html")
     else:
-        pharmPhone = request.form.get('phoneNumber')
-        updateWelsh = request.form.get('welshAvailable')
-        updateService = request.form.get('services')
-        print(pharmPhone)
-        print(updateWelsh)
-        return update_table("UPDATE tblPharmacy SET welshAvailable=? WHERE phoneNumber=?",[updateWelsh,pharmPhone])
+        phoneNumber = request.form.get('phoneNumber')
+        welshAvailable = request.form.get('welshAvailable')
+        services = request.form.get('services')
+        core_services = get_core_service_names()
+        for i in range(0, 4):
+            services = core_services[i] + "," + services
+        return update_table("UPDATE tblPharmacy SET welshAvailable=?, services=? WHERE phoneNumber=?",[welshAvailable, services, phoneNumber])
 
 
 @app.route('/pharmacies', methods=['GET'])
@@ -159,19 +183,19 @@ def add_service():
         return msg
 
 
-# @app.route('/deleteservice', methods=['GET', 'DELETE'])
-# def delete_service():
-    # if request.method == "GET":
-    #     return app.send_static_file("deleteService.html")
-    # else:
-        # name = request.form.get('name', default="Error")
-        # welshName = request.form.get('welshName', default="Error")
-        # pin = request.form.get('pincode', default="Error")
-        # if (pin == pincode):
-        #     msg = insert_into_database_table("DELETE FROM tblService WHERE name=? AND welshName=?", (name, welshName))
-        # else:
-        #     msg = "Invalid pin code"
-        # return msg
+@app.route('/deleteservice', methods=['GET', 'DELETE'])
+def delete_service():
+    if request.method == "GET":
+        return app.send_static_file("deleteService.html")
+    else:
+        name = request.form.get('name', default="Error")
+        welshName = request.form.get('welshName', default="Error")
+        pin = request.form.get('pincode', default="Error")
+        if (pin == pincode):
+            msg = insert_into_database_table("DELETE FROM tblService WHERE name=? AND welshName=?", (name, welshName))
+        else:
+            msg = "Invalid pin code"
+        return msg
 
 
 @app.route('/findservice', methods=['GET'])
@@ -300,11 +324,13 @@ def delete_from_table(sql_statement, array_of_terms):
         cur = conn.cursor()
         cur.execute(sql_statement, array_of_terms);
         conn.commit()
-        msg = "Record successfully deleted."
+        if cur.rowcount == 1:
+            msg = "Record successfully deleted."
+        else:
+            msg = "Record not deleted may not exist"
     except sql.ProgrammingError as e:
         conn.rollback()
         msg = "Error in delete operation" + str(e)
-        print(msg)
     finally:
         conn.close()
         return msg

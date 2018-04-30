@@ -1,8 +1,4 @@
-let core_services = ["dispensing", "repeat_dispensing", "medicine_disposal", "health_advice"];
-let enhanced_services = ["none", "alcohol_advice", "carer_support", "chlamydia_screening", "condom_supply", "emergency_hormonal_contraception",
-    "emergency_prescription_medicines", "flu_vaccination", "independent_prescribing", "medicines_use_reviews", "minor_ailment",
-    "needle_exchange", "new_medicine", "nhs_health_check", "pregnancy_testing", "stop_smoking", "stop_smoking_voucher",
-    "supervised_medicine_consumption", "weight_management"];
+var enhanced_services = [];
 
 let serviceMap = new Map();
 
@@ -15,54 +11,48 @@ function submitAddForm()
 
     var phoneNumber = form["phoneNumber"].value;
 
+    var welshAvailable = form["welshAvailable"].checked;
+
     var openingTimes = "";
 
     var mondayOpen = form["mondayOpen"].value;
     var mondayClose = form["mondayClose"].value;
-    openingTimes += mondayOpen + "," + mondayClose + ":";
+    openingTimes += mondayOpen + ":" + mondayClose + ",";
 
     var tuesdayOpen = form["tuesdayOpen"].value;
     var tuesdayClose = form["tuesdayClose"].value;
-    openingTimes += tuesdayOpen + "," + tuesdayClose + ":";
+    openingTimes += tuesdayOpen + ":" + tuesdayClose + ",";
 
     var wednesdayOpen = form["wednesdayOpen"].value;
     var wednesdayClose = form["wednesdayClose"].value;
-    openingTimes += wednesdayOpen + "," + wednesdayClose + ":";
+    openingTimes += wednesdayOpen + ":" + wednesdayClose + ",";
 
     var thursdayOpen = form["thursdayOpen"].value;
     var thursdayClose = form["thursdayClose"].value;
-    openingTimes += thursdayOpen + "," + thursdayClose + ":";
+    openingTimes += thursdayOpen + ":" + thursdayClose + ",";
 
     var fridayOpen = form["fridayOpen"].value;
     var fridayClose = form["fridayClose"].value;
-    openingTimes += fridayOpen + "," + fridayClose + ":";
+    openingTimes += fridayOpen + ":" + fridayClose + ",";
 
     var saturdayOpen = form["saturdayOpen"].value;
     var saturdayClose = form["saturdayClose"].value;
-    openingTimes += saturdayOpen + "," + saturdayClose + ":";
+    openingTimes += saturdayOpen + ":" + saturdayClose + ",";
 
     var sundayOpen = form["sundayOpen"].value;
     var sundayClose = form["sundayClose"].value;
-    openingTimes += sundayOpen + "," + sundayClose;
-
-    var coreServicesDivs = document.getElementById("coreServiceList").getElementsByTagName("input");
-    var coreServices = "";
-    for (i = 0; i < coreServicesDivs.length; i++)
-    {
-        coreServices += core_services[i] + "," + coreServicesDivs[i].checked + ":";
-    }
+    openingTimes += sundayOpen + ":" + sundayClose;
 
     var enhancedServices = "";
     for (var entry of serviceMap.entries())
     {
         var index = entry[0].id;
-        var welshAvailable = document.getElementById("enhancedServiceWelshAvailable" + index).getElementsByTagName("input").item(0).checked;
-        enhancedServices += entry[1] + "," + welshAvailable + ":";
+        enhancedServices += entry[1] + ",";
     }
     enhancedServices = enhancedServices.substr(0, enhancedServices.length - 1);
 
     var pin = form["pincode"].value;
-    var params = 'name=' + name + '&lat=' + lat + '&long=' + long + '&phoneNumber=' + phoneNumber + '&openingTimes=' + openingTimes + "&services=" + coreServices + enhancedServices + '&pincode=' + pin;
+    var params = 'name=' + htmlEntities(name) + '&lat=' + lat + '&long=' + long + '&phoneNumber=' + phoneNumber + '&welshAvailable=' + welshAvailable + '&openingTimes=' + openingTimes + "&services=" + enhancedServices + '&pincode=' + pin;
     var xhttp = new XMLHttpRequest();
     var msg = "";
     xhttp.open("post", "/addpharmacy", true); // true is asynchronous
@@ -106,7 +96,7 @@ function submitDeleteForm()
     var params = 'name=' + name + '&phoneNumber=' + phoneNumber + '&pincode=' + pin;
     var xhttp = new XMLHttpRequest();
     var msg = "";
-    xhttp.open("post", "/deletepharmacy", true); // true is asynchronous
+    xhttp.open("DELETE", "/deletepharmacy", true); // true is asynchronous
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.onreadystatechange = function ()
     {
@@ -117,7 +107,7 @@ function submitDeleteForm()
                 msg = xhttp.responseText;
                 if (msg === "Invalid pin code")
                     document.getElementById("pincode").style.border = "3px solid red";
-                else
+                else if (msg === "Record successfully deleted.")
                 {
                     form.reset();
                     document.getElementById("pincode").style.border = "none";
@@ -137,26 +127,14 @@ function submitDeleteForm()
     return false;
 }
 
-function test()
-{
+function htmlEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-function loadOptions()
+function loadOptions(services)
 {
-    divToChange = document.getElementById("coreServiceList");
-    let text = core_services[0].replace('_', ' ');
-    text = text.capitalize();
-    divToChange.innerHTML = `<h3>Select which core services are available in Welsh</h3>`;
-    for (var i = 0; i < core_services.length; i++)
-    {
-        let text = core_services[i].replace('_', ' ').replace('_', ' ');
-        text = text.capitalize();
-        divToChange.innerHTML += `
-        <label for="serviceWelshAvailable` + i + `">` + text + `</label>
-        <input name="serviceWelshAvailable` + i + `" value="serviceWelshAvailable` + i + `" type="checkbox">
-        <br>`;
-    }
-
+    enhanced_services = services
+    enhanced_services.unshift("none")
     divToChange = document.getElementById("newServiceSection1");
     divToChange.innerHTML = `
     <h3>Select which enhanced services are available.</h3>
@@ -167,16 +145,12 @@ function loadOptions()
     let serviceDiv = document.getElementById("1");
     for (var i = 0; i < enhanced_services.length; i++)
     {
-        let text = enhanced_services[i].replace('_', ' ').replace('_', ' ');
+        let text = enhanced_services[i].replace('_', ' ').replace('_', ' ').replace('_', ' ');
         text = text.capitalize();
         serviceDiv.innerHTML += `"<option value=` + enhanced_services[i] + `>` + text + `</option>"`;
     }
 
     divToChange.innerHTML += `</select>
-        </div>
-        <div id="enhancedServiceWelshAvailable1">
-            <label for="enhancedServiceWelshAvailable">Is this available in welsh?</label>
-            <input name="enhancedServiceWelshAvailable" value="enhancedServiceWelshAvailable" type="checkbox">
         </div>
     </div>
     <br>
@@ -205,17 +179,13 @@ function serviceSelected(selectbox)
             {
                 if (!valueInMap(serviceMap, enhanced_services[i]))
                 {
-                    let text = enhanced_services[i].replace('_', ' ').replace('_', ' ');
+                    let text = enhanced_services[i].replace('_', ' ').replace('_', ' ').replace('_', ' ');
                     text = text.capitalize();
                     serviceDiv.innerHTML += `"<option value=` + enhanced_services[i] + `>` + text + `</option>"`;
                 }
             }
 
             divToChange.innerHTML += `</select>
-                    </div>
-                    <div id="enhancedServiceWelshAvailable` + index + `">
-                        <label for="enhancedServiceWelshAvailable">Is this available in welsh?</label>
-                        <input name="enhancedServiceWelshAvailable" value="enhancedServiceWelshAvailable" type="checkbox">
                     </div>
                 </div>
                 <br>

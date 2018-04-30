@@ -5,7 +5,7 @@
     <script type="text/javascript" src="/static/js/handleRequests.js"></script>
 </head>
 
-<body onload="loadOptions()">
+<body onload="loadOptions({{ services }})">
 <a href="/">Home page</a>
 <br>
 <br>
@@ -26,6 +26,10 @@
     <br>
     <label for="phoneNumber"><b>Phone Number: </b></label>
     <input type="tel" placeholder="Enter phone number" name="phoneNumber" id="phoneNumber" required>
+    <br>
+    <br>
+    <label for="welshAvailable"><b>Is welsh available at this pharmacy?</b></label>
+    <input name="welshAvailable" value="welshAvailable" type="checkbox">
     <br>
     <h2>Opening times: </h2>
     <label for="mondayOpen"><b>Monday opening times:</b></label>
@@ -88,15 +92,11 @@
            required>
     <br>
     <h2>Service Data</h2>
-    <div id="coreServiceList"></div>
     <div id="newServiceSection1"></div
     <br>
     <label for="pincode"><b>Pincode:</b></label>
     <br>
     <input type="password" placeholder="Enter pincode" name="pincode" id="pincode" required>
-    <br>
-    <br>
-    <input type="button" value="Test" name="button1" onclick="test()">
     <br>
     <br>
     <input type="submit" value="Add pharmacy" name="submit">
