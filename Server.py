@@ -30,7 +30,7 @@ def add_pharmacy():
         services = request.form.get('services', default="Error")
         core_services = get_core_service_names()
         for i in range(0, 4):
-            services = services.insert(core_services[i] + ",")
+            services = core_services[i] + "," + services
         pin = request.form.get('pincode', default="Error")
         if (pin == pincode):
             msg = insert_into_database_table("INSERT INTO tblPharmacy ('name', 'lat', 'long', 'openingTimes', 'phoneNumber', 'welshAvailable', 'services') VALUES (?,?,?,?,?,?,?)", (name, lat, long, openingTimes, phoneNumber, welshAvailable, services))
